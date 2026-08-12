@@ -138,6 +138,23 @@ test.describe('Модальное окно ингредиента', () => {
     await expect(modal.getByText(SAUCE_NAME, { exact: true })).toBeVisible();
   });
 
+  test('показывает данные именно того ингредиента, по которому кликнули', async ({
+    page
+  }) => {
+    const modal = page.locator('#modals');
+
+    await ingredientRow(page, BUN_NAME).getByText(BUN_NAME).click();
+    await expect(modal.getByText(BUN_NAME, { exact: true })).toBeVisible();
+    await expect(modal.getByText(SAUCE_NAME)).not.toBeVisible();
+
+    await modal.getByRole('button').click();
+    await expect(modal.getByText('Детали ингредиента')).not.toBeVisible();
+
+    await ingredientRow(page, SAUCE_NAME).getByText(SAUCE_NAME).click();
+    await expect(modal.getByText(SAUCE_NAME, { exact: true })).toBeVisible();
+    await expect(modal.getByText(BUN_NAME)).not.toBeVisible();
+  });
+
   test('закрывается по клику на крестик', async ({ page }) => {
     await ingredientRow(page, SAUCE_NAME).getByText(SAUCE_NAME).click();
 
