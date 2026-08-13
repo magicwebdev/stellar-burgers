@@ -106,6 +106,9 @@ test.describe('Добавление ингредиента в конструкт
       .click();
 
     await expect(constructor.getByText('Выберите начинку')).not.toBeVisible();
+    await expect(
+      constructor.getByText(MAIN_NAME, { exact: true })
+    ).toBeVisible();
   });
 
   test('добавляет булку и начинку одновременно', async ({ page }) => {
@@ -120,6 +123,9 @@ test.describe('Добавление ингредиента в конструкт
 
     await expect(constructor.getByText(`${BUN_NAME} (верх)`)).toBeVisible();
     await expect(constructor.getByText('Выберите начинку')).not.toBeVisible();
+    await expect(
+      constructor.getByText(SAUCE_NAME, { exact: true })
+    ).toBeVisible();
   });
 });
 
